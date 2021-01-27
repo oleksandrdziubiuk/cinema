@@ -1,6 +1,6 @@
 package com.dev.cinema.dao.impl;
 
-import com.dev.cinema.exception.SessionException;
+import com.dev.cinema.exception.DataProcessingException;
 import com.dev.cinema.lib.Dao;
 import com.dev.cinema.model.Movie;
 import com.dev.cinema.util.HibernateUtil;
@@ -13,7 +13,7 @@ import org.hibernate.query.Query;
 public class MovieDaoImpl implements MovieDao {
 
     @Override
-    public Movie add(Movie movie) throws SessionException {
+    public Movie add(Movie movie) {
         Transaction transaction = null;
         Session session = null;
         try {
@@ -22,11 +22,11 @@ public class MovieDaoImpl implements MovieDao {
             session.save(movie);
             transaction.commit();
             return movie;
-        } catch (SessionException e) {
+        } catch (DataProcessingException e) {
             if (transaction != null) {
                 transaction.rollback();
             }
-            throw new SessionException("Can't insert Movie entity", e);
+            throw new DataProcessingException("Can't insert Movie entity" + movie, e);
         } finally {
             if (session != null) {
                 session.close();
