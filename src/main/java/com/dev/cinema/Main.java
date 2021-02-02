@@ -16,7 +16,7 @@ import java.time.LocalDateTime;
 public class Main {
     private static Injector injector = Injector.getInstance("com.dev.cinema");
 
-    public static void main(String[] args) throws AuthenticationException {
+    public static void main(String[] args) {
         Movie movie = new Movie();
         movie.setTitle("Fast and Furious");
         MovieService movieService = (MovieService) injector.getInstance(MovieService.class);
@@ -50,6 +50,10 @@ public class Main {
         AuthenticationService service = (AuthenticationService)
                 injector.getInstance(AuthenticationService.class);
         System.out.println(service.registration(user.getEmail(), user.getPassword()));
-        System.out.println(service.login(user.getEmail(), user.getPassword()));
+        try {
+            System.out.println(service.login(user.getEmail(), user.getPassword()));
+        } catch (AuthenticationException e) {
+            System.out.println("Incorrect login");
+        }
     }
 }
