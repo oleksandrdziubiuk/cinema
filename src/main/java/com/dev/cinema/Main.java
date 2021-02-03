@@ -1,9 +1,11 @@
 package com.dev.cinema;
 
+import com.dev.cinema.exception.AuthenticationException;
 import com.dev.cinema.lib.Injector;
 import com.dev.cinema.model.CinemaHall;
 import com.dev.cinema.model.Movie;
 import com.dev.cinema.model.MovieSession;
+import com.dev.cinema.security.AuthenticationService;
 import com.dev.cinema.service.CinemaHallService;
 import com.dev.cinema.service.MovieService;
 import com.dev.cinema.service.MovieSessionService;
@@ -39,5 +41,14 @@ public class Main {
         movieSessionService.add(movieSession);
         System.out.println(movieSessionService
                 .findAvailableSessions(movie.getId(), LocalDate.now()));
+
+        AuthenticationService service = (AuthenticationService)
+                injector.getInstance(AuthenticationService.class);
+        System.out.println(service.register("bob", "123"));
+        try {
+            System.out.println(service.login("bob", "123"));
+        } catch (AuthenticationException e) {
+            System.out.println("Incorrect login");
+        }
     }
 }
