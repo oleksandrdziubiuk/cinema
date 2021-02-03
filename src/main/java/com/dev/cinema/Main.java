@@ -5,10 +5,13 @@ import com.dev.cinema.lib.Injector;
 import com.dev.cinema.model.CinemaHall;
 import com.dev.cinema.model.Movie;
 import com.dev.cinema.model.MovieSession;
+import com.dev.cinema.model.ShoppingCart;
+import com.dev.cinema.model.User;
 import com.dev.cinema.security.AuthenticationService;
 import com.dev.cinema.service.CinemaHallService;
 import com.dev.cinema.service.MovieService;
 import com.dev.cinema.service.MovieSessionService;
+import com.dev.cinema.service.ShoppingCartService;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 
@@ -44,11 +47,26 @@ public class Main {
 
         AuthenticationService service = (AuthenticationService)
                 injector.getInstance(AuthenticationService.class);
-        System.out.println(service.register("bob", "123"));
+        User bob = service.register("bob", "123");
+        User alice = service.register("alice", "111");
         try {
             System.out.println(service.login("bob", "123"));
         } catch (AuthenticationException e) {
             System.out.println("Incorrect login");
         }
+
+        ShoppingCartService shoppingCartService = (ShoppingCartService)
+                injector.getInstance(ShoppingCartService.class);
+
+        shoppingCartService.addSession(movieSession, bob);
+        shoppingCartService.addSession(movieSession, alice);
+        ShoppingCart byBob = shoppingCartService.getByUser(bob);
+        ShoppingCart byAlice = shoppingCartService.getByUser(alice);
+        System.out.println(byBob);
+        System.out.println(byAlice);
+        shoppingCartService.clear(byBob);
+        shoppingCartService.clear(byAlice);
+        System.out.println(shoppingCartService.getByUser(bob));
+        System.out.println(shoppingCartService.getByUser(alice));
     }
 }
