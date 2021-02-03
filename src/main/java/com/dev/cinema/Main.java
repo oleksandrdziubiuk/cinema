@@ -5,7 +5,6 @@ import com.dev.cinema.lib.Injector;
 import com.dev.cinema.model.CinemaHall;
 import com.dev.cinema.model.Movie;
 import com.dev.cinema.model.MovieSession;
-import com.dev.cinema.model.User;
 import com.dev.cinema.security.AuthenticationService;
 import com.dev.cinema.service.CinemaHallService;
 import com.dev.cinema.service.MovieService;
@@ -43,15 +42,11 @@ public class Main {
         System.out.println(movieSessionService
                 .findAvailableSessions(movie.getId(), LocalDate.now()));
 
-        User user = new User();
-        user.setEmail("bob");
-        user.setPassword("123");
-
         AuthenticationService service = (AuthenticationService)
                 injector.getInstance(AuthenticationService.class);
-        System.out.println(service.registration(user.getEmail(), user.getPassword()));
+        System.out.println(service.register("bob", "123"));
         try {
-            System.out.println(service.login(user.getEmail(), user.getPassword()));
+            System.out.println(service.login("bob", "123"));
         } catch (AuthenticationException e) {
             System.out.println("Incorrect login");
         }
