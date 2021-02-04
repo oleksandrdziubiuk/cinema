@@ -76,6 +76,5 @@ public class Main {
         System.out.println(orderService.completeOrder(shoppingCartService.getByUser(bob)));
         System.out.println(shoppingCartService.getByUser(bob));
         System.out.println(orderService.getOrdersHistory(bob));
-
     }
 }
