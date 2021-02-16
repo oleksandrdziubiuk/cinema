@@ -31,7 +31,7 @@ public class ShoppingCartController {
         this.shoppingCartMapper = shoppingCartMapper;
     }
 
-    @PostMapping("/movie-session")
+    @PostMapping("/movie-sessions")
     public void addMovieSession(@RequestParam Long userId, @RequestParam Long movieSessionId) {
         User user = userService.get(userId);
         MovieSession session = movieSessionService.get(movieSessionId);
