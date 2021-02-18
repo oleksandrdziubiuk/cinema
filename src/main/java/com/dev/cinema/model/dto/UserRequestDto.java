@@ -2,13 +2,11 @@ package com.dev.cinema.model.dto;
 
 import com.dev.cinema.lib.ValidEmail;
 import com.dev.cinema.lib.ValidPassword;
-import javax.validation.constraints.Min;
 
 @ValidPassword(field = "password", fieldMatch = "repeatPassword")
 public class UserRequestDto {
     @ValidEmail
     private String email;
-    @Min(6)
     private String password;
     private String repeatPassword;
 
