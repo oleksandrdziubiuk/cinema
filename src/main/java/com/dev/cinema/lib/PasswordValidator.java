@@ -23,6 +23,6 @@ public class PasswordValidator implements ConstraintValidator<ValidPassword, Obj
         if (passwordValue == null) {
             return false;
         }
-        return passwordValue == repeatPasswordValue;
+        return passwordValue.equals(repeatPasswordValue);
     }
 }
