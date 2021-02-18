@@ -1,6 +1,11 @@
 package com.dev.cinema.model.dto;
 
+import javax.validation.constraints.Max;
+import javax.validation.constraints.Min;
+
 public class CinemaHallRequestDto {
+    @Min(0)
+    @Max(350)
     private int capacity;
     private String description;
 

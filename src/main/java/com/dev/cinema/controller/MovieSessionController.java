@@ -8,7 +8,10 @@ import com.dev.cinema.service.dtomapper.MovieSessionMapper;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.stream.Collectors;
+import javax.validation.Valid;
+import javax.validation.constraints.Min;
 import org.springframework.format.annotation.DateTimeFormat;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -21,6 +24,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping("/movie-sessions")
+@Validated
 public class MovieSessionController {
     private final MovieSessionService movieSessionService;
     private final MovieSessionMapper movieSessionMapper;
@@ -42,21 +46,21 @@ public class MovieSessionController {
     }
 
     @PostMapping
-    public void createMovieSession(@RequestBody MovieSessionRequestDto requestDto) {
+    public void createMovieSession(@Valid @RequestBody MovieSessionRequestDto requestDto) {
         MovieSession movieSession = movieSessionMapper.fromDto(requestDto);
         movieSessionService.add(movieSession);
     }
 
     @PutMapping("/{id}")
-    public void updateMovieSession(@RequestBody MovieSessionRequestDto requestDto,
-                                   @PathVariable Long id) {
+    public void updateMovieSession(@Valid @RequestBody MovieSessionRequestDto requestDto,
+                                   @PathVariable @Min(1) Long id) {
         MovieSession movieSession = movieSessionMapper.fromDto(requestDto);
         movieSession.setId(id);
         movieSessionService.update(movieSession);
     }
 
     @DeleteMapping("/{id}")
-    public void deleteMovieSession(@PathVariable Long id) {
+    public void deleteMovieSession(@PathVariable @Min(1) Long id) {
         movieSessionService.delete(id);
     }
 }
