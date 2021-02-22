@@ -3,7 +3,6 @@ package com.dev.cinema.model.dto;
 import com.dev.cinema.lib.ValidEmail;
 import com.dev.cinema.lib.ValidPassword;
 import java.util.List;
-import javax.validation.constraints.NotNull;
 
 @ValidPassword(field = "password", fieldMatch = "repeatPassword")
 public class UserRequestDto {
@@ -11,7 +10,6 @@ public class UserRequestDto {
     private String email;
     private String password;
     private String repeatPassword;
-    @NotNull
     private List<String> roles;
 
     public String getEmail() {

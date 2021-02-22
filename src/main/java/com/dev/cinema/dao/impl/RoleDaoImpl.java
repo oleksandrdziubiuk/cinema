@@ -43,9 +43,9 @@ public class RoleDaoImpl implements RoleDao {
     public Optional<Role> getRoleByName(String roleName) {
         try (Session session = sessionFactory.openSession()) {
             Query<Role> getRole = session.createQuery("from Role "
-                    + "where role = :roleName", Role.class);
+                    + "where role like :roleName", Role.class);
             getRole.setParameter("roleName", roleName);
-            return Optional.ofNullable(getRole.getSingleResult());
+            return getRole.uniqueResultOptional();
         } catch (Exception e) {
             throw new DataProcessingException("Can't get role " + roleName, e);
         }
